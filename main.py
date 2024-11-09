@@ -1,5 +1,6 @@
 import argparse
 import logging
+import os
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -33,6 +34,11 @@ def main(args):
     if args.mode == "train":
         # Load the entire dataset
         dataset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
+        # create dirs
+        if not os.path.exists(MODEL_DIR):
+            os.makedirs(MODEL_DIR)
+        if not os.path.exists(PLOTS_DIR):
+            os.makedirs(PLOTS_DIR)
 
         criterion = torch.nn.CrossEntropyLoss()
 
@@ -69,8 +75,9 @@ def main(args):
             ''')
 
             # Train the model
-            train_classifier(model, train_loader, val_loader, criterion, optimizer, MAX_EPOCHS_NUM, MODEL_DIR, PLOTS_DIR,
-                  device, BACKBONE, FREEZE_BACKBONE)
+            train_classifier(model, train_loader, val_loader, criterion, optimizer, MAX_EPOCHS_NUM, MODEL_DIR,
+                             PLOTS_DIR,
+                             device, BACKBONE, FREEZE_BACKBONE)
 
             # Optionally clear GPU cache
             torch.cuda.empty_cache()
@@ -82,7 +89,7 @@ def main(args):
     test_loader = DataLoader(dataset=testset, batch_size=1, shuffle=False)
     # Load model checkpoint
     model, _, _ = load_checkpoint(model, args.model_path)
-    test_classifier(model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE, CLASS_NAMES, device, args.mode)
+    test_classifier(model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE, CLASS_NAMES, device)
 
 
 if __name__ == "__main__":
