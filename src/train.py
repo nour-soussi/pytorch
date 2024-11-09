@@ -45,9 +45,6 @@ def train_classifier(model, train_loader, val_loader, criterion, optimizer, num_
     """
     # Ensure the model directory exists
     global filename
-    if not os.path.exists(model_dir):
-        os.makedirs(model_dir)
-
     best_val_loss = float('inf')
     counter = 0
     patience = 10
