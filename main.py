@@ -14,6 +14,7 @@ from src.config import *
 from src.train import train_classifier
 from src.test import test_classifier
 from src.load_ckpts import load_checkpoint
+import mlflow
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -31,6 +32,10 @@ def main(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.to(device)
 
+
+
+    mlflow.set_tracking_uri(os.getenv("SECRET_HOST"))
+
     if args.mode == "train":
         # Load the entire dataset
         dataset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
@@ -43,7 +48,7 @@ def main(args):
         criterion = torch.nn.CrossEntropyLoss()
 
         # Define K-fold cross-validation with k=5
-        k_folds = 5
+        k_folds = 3
         kfold = KFold(n_splits=k_folds, shuffle=True)
 
         # K-fold Cross Validation model evaluation
