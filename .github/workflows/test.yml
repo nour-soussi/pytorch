@@ -33,6 +33,11 @@ jobs:
         run: |
           pip install dvc
 
+      # Install DVC GDrive (necessary for Google Drive support)
+      - name: Install DVC GDrive
+        run: |
+          pip install dvc-gdrive
+
       # Pull dataset with DVC (ensures the data is available)
       - name: Pull dataset with DVC
         run: |
