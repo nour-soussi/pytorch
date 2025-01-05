@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       # Checkout the repository code
       - name: Checkout repository
@@ -46,13 +47,13 @@ jobs:
           echo "    remote.pushurl = gdrive://<your-drive-folder-id>" >> ~/.dvc/config
           echo "[remote \"gdrive\"]" >> ~/.dvc/config
           echo "    type = gdrive" >> ~/.dvc/config
-          echo "    gdrive_service_account_json_file_path = /path/to/your/service-account.json" >> ~/.dvc/config
+          echo "    gdrive_service_account_json_file_path = /home/runner/work/pytorch/secret/gdrive_service_account.json" >> ~/.dvc/config
 
-      # Download the service account key (add this as a GitHub secret)
+      # Set up Google Drive authentication
       - name: Set up Google Drive authentication
         run: |
-          mkdir -p /path/to/your/secret
-          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}" > /path/to/your/secret/gdrive_service_account.json
+          mkdir -p ./secret
+          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}" > ./secret/gdrive_service_account.json
 
       # Pull dataset with DVC (ensures the data is available)
       - name: Pull dataset with DVC
