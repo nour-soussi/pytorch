@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir -p ~/.dvc
           echo "[core]" >> ~/.dvc/config
-          echo "    remote.pushurl = gdrive://<your-drive-folder-id>" >> ~/.dvc/config
+          echo "    remote.pushurl = gdrive://<1T1FbMBTMXPHzZH5-YBROvLreyzL0IE2J>" >> ~/.dvc/config
           echo "[remote \"gdrive\"]" >> ~/.dvc/config
           echo "    type = gdrive" >> ~/.dvc/config
           echo "    gdrive_service_account_json_file_path = /home/runner/work/pytorch/secret/gdrive_service_account.json" >> ~/.dvc/config
