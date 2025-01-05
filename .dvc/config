@@ -6,3 +6,4 @@
     gdrive_acknowledge_abuse = true
     gdrive_use_service_account = true
     gdrive_client_id = 106170222404774797089
+    gdrive_service_account_json_file_path = ./secret/gdrive_service_account.json
