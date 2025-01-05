@@ -41,6 +41,7 @@ jobs:
       # Set up DVC configuration for GDrive (using service account)
       - name: Configure DVC GDrive authentication
         run: |
+          mkdir -p ~/.dvc
           echo "[core]" >> ~/.dvc/config
           echo "    remote.pushurl = gdrive://<your-drive-folder-id>" >> ~/.dvc/config
           echo "[remote \"gdrive\"]" >> ~/.dvc/config
