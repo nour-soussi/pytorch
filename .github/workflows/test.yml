@@ -38,6 +38,21 @@ jobs:
         run: |
           pip install dvc-gdrive
 
+      # Set up DVC configuration for GDrive (using service account)
+      - name: Configure DVC GDrive authentication
+        run: |
+          echo "[core]" >> ~/.dvc/config
+          echo "    remote.pushurl = gdrive://<your-drive-folder-id>" >> ~/.dvc/config
+          echo "[remote \"gdrive\"]" >> ~/.dvc/config
+          echo "    type = gdrive" >> ~/.dvc/config
+          echo "    gdrive_service_account_json_file_path = /path/to/your/service-account.json" >> ~/.dvc/config
+
+      # Download the service account key (add this as a GitHub secret)
+      - name: Set up Google Drive authentication
+        run: |
+          mkdir -p /path/to/your/secret
+          echo "${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}" > /path/to/your/secret/gdrive_service_account.json
+
       # Pull dataset with DVC (ensures the data is available)
       - name: Pull dataset with DVC
         run: |
